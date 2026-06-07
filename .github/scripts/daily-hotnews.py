@@ -16,10 +16,12 @@ try:
     resp = urllib.request.urlopen(req, timeout=15)
     data = json.loads(resp.read())
     items = data.get('data', {}).get('cards', [{}])[0].get('content', [])
-    for item in items[:10]:
+    for item in items:
+        if len(news_items) >= 10:
+            break
         word = item.get('word', item.get('query', ''))
         desc = item.get('desc', '')
-        if word:
+        if word and desc:
             news_items.append((word, desc))
 except:
     pass
@@ -35,7 +37,9 @@ if not news_items:
         resp = urllib.request.urlopen(req, timeout=15)
         data = json.loads(resp.read())
         items = data.get('data', {}).get('list', [])
-        for item in items[:10]:
+        for item in items:
+            if len(news_items) >= 10:
+                break
             name = item.get('name', '')
             if name:
                 news_items.append((name, ''))
