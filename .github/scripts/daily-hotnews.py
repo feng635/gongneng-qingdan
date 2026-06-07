@@ -16,9 +16,23 @@ try:
         w, desc = x.get('word', x.get('query', '')), x.get('desc', '')
         if w and desc: items.append((w, desc, 'baidu'))
     if items: srcs.append('百度')
-except: pass
+except Exception as e: print(f'百度: {e}')
 
-# 2. 抖音（天聚数行）
+# 2. 抖音（从热搜聚合站获取，GitHub Actions 上可访问）
+if len(items) < 10:
+    try:
+        r = urllib.request.Request('https://api.03c3.cn/api/hot?type=douyin',
+            headers={'User-Agent': 'Mozilla/5.0'})
+        d = json.loads(urllib.request.urlopen(r, timeout=15).read())
+        for x in d.get('data', []):
+            if len(items) >= 10: break
+            w = x.get('title', x.get('name', ''))
+            if w and not any(w == t for t, _, _ in items):
+                items.append((w, '抖音热榜', 'douyin'))
+        if any(s == 'douyin' for _, _, s in items): srcs.append('抖音')
+    except Exception as e: print(f'抖音1: {e}')
+
+# 3. 天聚数行（备用）
 key = os.environ.get('TIAN_API_KEY', '')
 if key and len(items) < 10:
     try:
@@ -34,7 +48,7 @@ if key and len(items) < 10:
             if any(s == 'douyin' for _, _, s in items): srcs.append('抖音')
     except: pass
 
-# 3. 如果不足10条，补百度纯标题
+# 4. 补百度纯标题
 if len(items) < 10:
     try:
         r = urllib.request.Request('https://top.baidu.com/api/board?tab=realtime',
@@ -55,12 +69,6 @@ emoji_map = {
     '汽车|新能源|特斯拉|比亚迪|蔚来|小鹏|理想|燃油':'\U0001f697',
     '微信|抖音|TikTok|微博|小红书|快手|B站|美团|支付':'\U0001f4ac',
     '股市|基金|理财|银行|美元|黄金|比特币|经济|贸易|关税':'\U0001f4b0',
-    '游戏|电竞|原神|王者|吃鸡|PS5|Switch':'\U0001f3ae',
-    '电影|电视|综艺|视频|音乐|娱乐|明星|演唱会':'\U0001f3ac',
-    '教育|高考|考研|大学|学生|老师|考试':'\U0001f393',
-    '天气|地震|台风|暴雨|洪水|灾害|气候':'\U000026a1',
-    '航天|火箭|卫星|登月|NASA|SpaceX|神舟':'\U0001f680',
-    '芯片|半导体|5G|6G|专利|技术|科技':'\U0001f4bb',
 }
 def emoji(t):
     for k, e in emoji_map.items():
@@ -94,8 +102,4 @@ data = urllib.parse.urlencode({'title': title, 'desp': content}).encode()
 req = urllib.request.Request(f'https://sctapi.ftqq.com/{sct_key}.send', data=data,
     headers={'Content-Type': 'application/x-www-form-urlencoded'})
 resp = json.loads(urllib.request.urlopen(req).read())
-
-if resp.get('code') == 0:
-    print(f'OK - {len(items)}条, 来源: {", ".join(srcs)}')
-else:
-    print(f'FAIL: {resp}')
+print(f'OK - {len(items)}条' if resp.get('code') == 0 else f'FAIL: {resp}')
