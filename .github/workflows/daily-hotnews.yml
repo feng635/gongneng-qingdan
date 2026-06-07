@@ -13,4 +13,5 @@ jobs:
       - name: 推送热点新闻
         env:
           SCT_KEY: ${{ secrets.SCT_KEY }}
+          TIAN_API_KEY: ${{ secrets.TIAN_API_KEY }}
         run: python3 .github/scripts/daily-hotnews.py

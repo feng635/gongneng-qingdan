@@ -28,27 +28,50 @@ try:
 except:
     pass
 
-# GitHub Actions 上抓抖音热榜（用 douyin.com/hot 页面数据）
-if len(news_items) < 10:
+# 抖音热榜（天聚数行 API）
+douyin_key = os.environ.get('TIAN_API_KEY', '')
+if douyin_key and len(news_items) < 10:
     try:
         req = urllib.request.Request(
-            'https://www.douyin.com/aweme/v1/web/hot/search/list/',
-            headers={
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                'Accept': 'application/json',
-            }
+            f'https://apis.tianapi.com/douyinhot/index?key={douyin_key}',
+            headers={'User-Agent': 'Mozilla/5.0'},
         )
         resp = urllib.request.urlopen(req, timeout=15)
         data = json.loads(resp.read())
-        for item in data.get('data', {}).get('word_list', []):
+        if data.get('code') == 200:
+            for item in data.get('result', []):
+                if len(news_items) >= 10:
+                    break
+                word = item.get('word', '')
+                label = item.get('label', '')
+                if word and not any(w == word for w, _, _ in news_items):
+                    news_items.append((word, f'抖音 {label}' if label else '抖音热榜', 'douyin'))
+            if any(s == 'douyin' for _, _, s in news_items):
+                fetched_sources.append('抖音')
+    except:
+        pass
+
+# 微博热搜（备用）
+if len(news_items) < 10:
+    try:
+        req = urllib.request.Request(
+            'https://tenapi.cn/v2/weibohot',
+            headers={'User-Agent': 'Mozilla/5.0'},
+        )
+        resp = urllib.request.urlopen(req, timeout=15)
+        data = json.loads(resp.read())
+        items = data.get('data', {}).get('list', [])
+        for item in items:
             if len(news_items) >= 10:
                 break
-            word = item.get('word', '')
-            hot_val = item.get('hot_value', 0)
-            if word:
-                news_items.append((word, f'抖音热榜热度: {hot_val}', 'douyin'))
-        if any(s == 'douyin' for _, _, s in news_items):
-            fetched_sources.append('抖音')
+            name = item.get('name', '')
+            hot = item.get('hot', '')
+            if name:
+                # 检查是否与百度重复
+                if not any(w == name for w, _, _ in news_items):
+                    news_items.append((name, f'微博热搜 {hot}' if hot else '微博热搜', 'weibo'))
+        if any(s == 'weibo' for _, _, s in news_items):
+            fetched_sources.append('微博')
     except:
         pass
 
@@ -99,7 +122,7 @@ def get_emoji(text):
             return emoji
     return '\U0001f4f0'
 
-source_labels = {'baidu': '百度', 'douyin': '抖音', 'other': '综合'}
+source_labels = {'baidu': '百度', 'weibo': '微博', 'other': '综合'}
 lines = ['# \U0001f4f0 今日热点 TOP10', '', '---', '']
 for i, (title, desc, src) in enumerate(news_items, 1):
     emoji = get_emoji(title)
