@@ -5,8 +5,11 @@ from datetime import datetime, timezone, timedelta
 bj_tz = timezone(timedelta(hours=8))
 now = datetime.now(bj_tz).strftime('%m/%d %H:%M')
 
-# 尝试获取百度热搜
+# 获取新闻：百度热搜 + 抖音热榜 混合
 news_items = []
+fetched_sources = []
+
+# 1. 百度热搜
 try:
     req = urllib.request.Request(
         'https://top.baidu.com/api/board?tab=realtime',
@@ -22,11 +25,37 @@ try:
         word = item.get('word', item.get('query', ''))
         desc = item.get('desc', '')
         if word and desc:
-            news_items.append((word, desc))
+            news_items.append((word, desc, 'baidu'))
+    if news_items:
+        fetched_sources.append('百度')
 except:
     pass
 
-# 备用：tenapi
+# 2. 抖音热榜
+try:
+    req = urllib.request.Request(
+        'https://tenapi.cn/v2/douyinhot',
+        headers={'User-Agent': 'Mozilla/5.0'},
+        method='GET'
+    )
+    resp = urllib.request.urlopen(req, timeout=15)
+    data = json.loads(resp.read())
+    items = data.get('data', {}).get('list', [])
+    # 混合：如果百度不足10条，用抖音补；否则拿5条抖音丰富内容
+    for item in items:
+        if len(news_items) >= 10:
+            break
+        name = item.get('name', '')
+        hot = item.get('hot', '')
+        if name:
+            desc = f'抖音热榜 \U0001f525 {hot}' if hot else '抖音热榜'
+            news_items.append((name, desc, 'douyin'))
+    if any(s == 'douyin' for _, _, s in news_items[-6:]):
+        fetched_sources.append('抖音')
+except:
+    pass
+
+# 3. 备用：通用热榜
 if not news_items:
     try:
         req = urllib.request.Request(
@@ -42,7 +71,9 @@ if not news_items:
                 break
             name = item.get('name', '')
             if name:
-                news_items.append((name, ''))
+                news_items.append((name, '', 'other'))
+        if news_items:
+            fetched_sources.append('综合')
     except:
         pass
 
@@ -70,19 +101,24 @@ def get_emoji(text):
 
 # 构建消息内容
 import re
+source_labels = {'baidu': '百度', 'douyin': '抖音', 'other': '综合'}
 lines = ['# \U0001f4f0 今日热点 TOP10', '', '---', '']
-for i, (title, desc) in enumerate(news_items, 1):
+for i, (title, desc, src) in enumerate(news_items, 1):
     emoji = get_emoji(title)
     hot = '\U0001f525' if i <= 3 else ''
-    link = f'https://www.baidu.com/s?wd={urllib.parse.quote(title)}'
+    src_tag = source_labels.get(src, '')
+    # 抖音用抖音搜索链接，其他用百度
+    if src == 'douyin':
+        link = f'https://www.douyin.com/search/{urllib.parse.quote(title)}'
+    else:
+        link = f'https://www.baidu.com/s?wd={urllib.parse.quote(title)}'
     lines.append(f'### {i}. {emoji} [{title}]({link}) {hot}')
-    if desc:
-        lines.append(f'> {desc}')
+    lines.append(f'> <{src_tag}> {desc}')
     lines.append('')
 
 lines.append('---')
-lines.append('')
 lines.append(f'\U0001f550 **{now}**')
+lines.append(f'\U0001f4e1 来源：{" + ".join(fetched_sources)}')
 lines.append('')
 lines.append('\U0001f916 *由 Nova 自动聚合推送*')
 lines.append('')
