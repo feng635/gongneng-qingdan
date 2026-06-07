@@ -48,8 +48,32 @@ if douyin_key and len(news_items) < 10:
                     news_items.append((word, f'抖音 {label}' if label else '抖音热榜', 'douyin'))
             if any(s == 'douyin' for _, _, s in news_items):
                 fetched_sources.append('抖音')
-    except:
-        pass
+        else:
+            # 没开通，打印日志
+            print(f'天聚数行: {data.get(\"msg\", \"未知错误\")}')
+    except Exception as e:
+        print(f'天聚数行错误: {e}')
+
+# 备用：从 douyin.com/hot 页面解析
+if len(news_items) < 10:
+    try:
+        # 使用抖音开放的 Web API（不需要cookie）
+        req = urllib.request.Request(
+            'https://www.douyin.com/aweme/v1/web/hot/search/list/',
+            headers={'User-Agent': 'Mozilla/5.0', 'Accept': 'application/json'},
+        )
+        resp = urllib.request.urlopen(req, timeout=15)
+        data = json.loads(resp.read())
+        for item in data.get('data', {}).get('word_list', []):
+            if len(news_items) >= 10:
+                break
+            word = item.get('word', '')
+            if word and not any(w == word for w, _, _ in news_items):
+                news_items.append((word, '抖音热榜', 'douyin'))
+        if any(s == 'douyin' for _, _, s in news_items):
+            fetched_sources.append('抖音')
+    except Exception as e:
+        print(f'抖音API: {e}')
 
 # 微博热搜（备用）
 if len(news_items) < 10:
