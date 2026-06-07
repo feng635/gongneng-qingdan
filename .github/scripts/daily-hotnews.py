@@ -42,17 +42,45 @@ if not news_items:
     except:
         pass
 
+# emoji 关键词映射
+EMOJI_MAP = {
+    '苹果|iPhone|手机|华为|小米|oppo|vivo|三星|荣耀': '\U0001f4f1',
+    'AI|人工智能|大模型|ChatGPT|Claude|OpenAI|谷歌|百度|科大讯飞|模型': '\U0001f916',
+    '汽车|新能源|特斯拉|比亚迪|蔚来|小鹏|理想|燃油': '\U0001f697',
+    '微信|抖音|TikTok|微博|小红书|快手|B站|美团|滴滴|支付': '\U0001f4ac',
+    '股市|基金|理财|银行|美元|黄金|比特币|经济|贸易|关税': '\U0001f4b0',
+    '游戏|电竞|原神|王者|吃鸡|PS5|Switch': '\U0001f3ae',
+    '电影|电视|综艺|视频|音乐|娱乐|明星|演唱会': '\U0001f3ac',
+    '疫情|疫苗|健康|医疗|医院|手术|药物': '\U0001f48a',
+    '教育|高考|考研|大学|学生|老师|考试': '\U0001f393',
+    '天气|地震|台风|暴雨|洪水|灾害|气候': '\U000026a1',
+    '航天|火箭|卫星|登月|NASA|SpaceX|神舟': '\U0001f680',
+    '芯片|半导体|5G|6G|专利|技术|科技': '\U0001f4bb',
+}
+def get_emoji(text):
+    import re
+    for keywords, emoji in EMOJI_MAP.items():
+        if re.search(keywords, text, re.I):
+            return emoji
+    return '\U0001f4f0'
+
 # 构建消息内容
-lines = ['# 今日热点 TOP10', '']
+import re
+lines = ['# \U0001f4f0 今日热点 TOP10', '', '---', '']
 for i, (title, desc) in enumerate(news_items, 1):
-    lines.append(f'{i}. **{title}**')
+    emoji = get_emoji(title)
+    hot = '\U0001f525' if i <= 3 else ''
+    lines.append(f'### {i}. {emoji} {title} {hot}')
     if desc:
-        lines.append(f'   {desc}')
+        lines.append(f'> {desc}')
     lines.append('')
 
 lines.append('---')
-lines.append(f'\U0001f550 {now}')
-lines.append('✏️ Nova 自动推送')
+lines.append(f'\U0001f550 **{now}**')
+lines.append('')
+lines.append('\U0001f916 *由 Nova 自动聚合推送*')
+lines.append('')
+lines.append('☁️ 祝你今天愉快！')
 
 content = '\n'.join(lines)
 title = f'\U0001f4f0 每日热点新闻 - {now.split()[0]}'
