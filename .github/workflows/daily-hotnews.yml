@@ -1,0 +1,63 @@
+name: Daily Hotnews
+
+on:
+  schedule:
+    # 北京时间每天早上9:00 = UTC 1:00
+    - cron: '0 1 * * *'
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  send-hotnews:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 获取热点新闻
+        run: |
+          # 百度热搜
+          BAIDU=$(curl -s --max-time 10 "https://top.baidu.com/api/board?tab=realtime" 2>/dev/null | python3 -c "
+import sys, json
+try:
+    data = json.load(sys.stdin)
+    items = data.get('data', {}).get('cards', [{}])[0].get('content', [])
+    for i, item in enumerate(items[:10]):
+        word = item.get('word', item.get('query', '未知'))
+        desc = item.get('desc', '')
+        hot = item.get('hotScore', '')
+        print(f'{i+1}. {word}')
+        if desc: print(f'   {desc}')
+        print()
+except:
+    print('(百度热搜获取失败)')
+" 2>/dev/null)
+
+          # 如果没有获取到，用备用的新闻API
+          if [ -z "$BAIDU" ]; then
+            NEWS=$(curl -s --max-time 10 "https://tenapi.cn/v2/hot" 2>/dev/null | python3 -c "
+import sys, json
+try:
+    data = json.load(sys.stdin)
+    items = data.get('data', {}).get('list', [])
+    for i, item in enumerate(items[:10]):
+        name = item.get('name', '未知')
+        print(f'{i+1}. {name}')
+        print()
+except:
+    print('(新闻获取失败)')
+" 2>/dev/null)
+          else
+            NEWS="$BAIDU"
+          fi
+
+          echo "NEWS<<EOF" >> $GITHUB_ENV
+          echo "$NEWS" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: 推送到微信
+        env:
+          SCT_KEY: ${{ secrets.SCT_KEY }}
+        run: |
+          TITLE="📰 每日热点新闻 - $(TZ='Asia/Shanghai' date '+%m/%d')"
+          CONTENT="# 今日热点 TOP10\n\n${{ env.NEWS }}\n\n---\n🕐 $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M')\n🤖 Nova 自动推送"
+
+          curl -s -X POST "https://sctapi.ftqq.com/${SCT_KEY}.send" \
+            --data-urlencode "title=${TITLE}" \
+            --data-urlencode "desp=${CONTENT}"
