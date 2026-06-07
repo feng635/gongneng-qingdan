@@ -70,17 +70,19 @@ lines = ['# \U0001f4f0 今日热点 TOP10', '', '---', '']
 for i, (title, desc) in enumerate(news_items, 1):
     emoji = get_emoji(title)
     hot = '\U0001f525' if i <= 3 else ''
-    lines.append(f'### {i}. {emoji} {title} {hot}')
+    link = f'https://www.baidu.com/s?wd={urllib.parse.quote(title)}'
+    lines.append(f'### {i}. {emoji} [{title}]({link}) {hot}')
     if desc:
         lines.append(f'> {desc}')
     lines.append('')
 
 lines.append('---')
+lines.append('')
 lines.append(f'\U0001f550 **{now}**')
 lines.append('')
 lines.append('\U0001f916 *由 Nova 自动聚合推送*')
 lines.append('')
-lines.append('☁️ 祝你今天愉快！')
+lines.append('💌 亲爱的枫，愿你今天元气满满，代码无Bug，心情如晴天！')
 
 content = '\n'.join(lines)
 title = f'\U0001f4f0 每日热点新闻 - {now.split()[0]}'
