@@ -2,7 +2,17 @@ import urllib.request, urllib.parse, json, os, re
 from datetime import datetime, timezone, timedelta
 
 bj = timezone(timedelta(hours=8))
-now = datetime.now(bj).strftime('%m/%d %H:%M')
+now_time = datetime.now(bj)
+now = now_time.strftime('%m/%d %H:%M')
+hour = now_time.hour
+
+# 非定时触发时，只在 8:30-9:30 之间发送
+# push 事件可能在任意时间触发，防止重复发送
+if os.environ.get('GITHUB_EVENT_NAME') == 'push':
+    if not (8 <= hour < 10):
+        print(f'当前时间 {hour}:00，不在发送窗口(8-9点)，跳过')
+        exit(0)
+
 items = []
 srcs = []
 
