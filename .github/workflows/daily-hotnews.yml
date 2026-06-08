@@ -3,8 +3,11 @@ name: Daily Hotnews
 on:
   push:
     branches: [master]
+    paths:
+      - '.github/scripts/daily-hotnews.py'
+      - '.github/workflows/daily-hotnews.yml'
   schedule:
-    - cron: '5 3 * * *'
+    - cron: '0 1 * * *'
   workflow_dispatch:
 
 jobs:

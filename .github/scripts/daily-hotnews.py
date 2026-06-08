@@ -6,11 +6,11 @@ now_time = datetime.now(bj)
 now = now_time.strftime('%m/%d %H:%M')
 hour = now_time.hour
 
-# 非定时触发时，只在 8:30-9:30 之间发送
-# push 事件可能在任意时间触发，防止重复发送
-if os.environ.get('GITHUB_EVENT_NAME') == 'push':
-    if not (8 <= hour < 10):
-        print(f'当前时间 {hour}:00，不在发送窗口(8-9点)，跳过')
+# schedule 触发时检查时间偏差，防止 GitHub Actions 严重延迟
+# push / workflow_dispatch 不限制，方便随时测试
+if os.environ.get('GITHUB_EVENT_NAME') == 'schedule':
+    if not (7 <= hour < 23):
+        print(f'schedule 触发但时间异常 ({hour}:00)，跳过')
         exit(0)
 
 items = []
