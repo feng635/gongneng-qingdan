@@ -6,11 +6,11 @@ now_time = datetime.now(bj)
 now = now_time.strftime('%m/%d %H:%M')
 hour = now_time.hour
 
-# schedule 触发时检查时间偏差，防止 GitHub Actions 严重延迟
+# schedule 触发时只在上午发送（8-11点），防止 GitHub 重复触发
 # push / workflow_dispatch 不限制，方便随时测试
 if os.environ.get('GITHUB_EVENT_NAME') == 'schedule':
-    if not (7 <= hour < 23):
-        print(f'schedule 触发但时间异常 ({hour}:00)，跳过')
+    if not (8 <= hour < 12):
+        print(f'schedule 触发但当前时间 {hour}:00，不在发送窗口(8-11点)，跳过')
         exit(0)
 
 items = []
