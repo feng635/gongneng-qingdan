@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell.exe -Command *)",
+      "Bash(wsl.exe *)",
+      "Bash(opencli *)",
+      "Bash(curl -s --ssl-no-revoke *)",
+      "Bash(curl -sL --ssl-no-revoke *)",
+      "Bash(export HTTP_PROXY=*)",
+      "Bash(HTTP_PROXY=*curl *)",
+      "Bash(export TESSDATA_PREFIX=*)",
+      "Bash(TESSDATA_PREFIX=*)",
+      "Bash(python -c *)",
+      "Bash(python -*)",
+      "Bash(which *)",
+      "Bash(where *)",
+      "Bash(takeown *)",
+      "Bash(icacls *)",
+      "Bash(rm *)",
+      "Bash(mkdir *)",
+      "Bash(sleep *)",
+      "Bash(taskkill *)",
+      "Bash(npx bilisum *)",
+      "mcp__firecrawl__firecrawl_search",
+      "mcp__firecrawl__firecrawl_scrape",
+      "mcp__firecrawl__firecrawl_search_feedback",
+      "mcp__firecrawl__firecrawl_extract",
+      "mcp__firecrawl__firecrawl_map"
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "title": "从0开始“做”一个Agent！【n8n草履虫教程】",
+  "root": "root",
+  "nodes": [
+    {
+      "id": "root",
+      "label": "介绍了n8n平台上提供的各种工具,并展示了如何通",
+      "type": "root",
+      "summary": "介绍了n8n平台上提供的各种工具,并展示了如何通过这些工具来一起构建一个自动化任务.",
+      "children": [
+        {
+          "id": "theme1",
+          "label": "介绍Agent的的概念，与简单的自动化工作流的区",
+          "type": "theme",
+          "summary": "介绍 Agent 的的概念，与简单的自动化工作流的区别，以及其组成、特性。”,",
+          "children": [
+            {
+              "id": "(topic1",
+              "label": "节点 1",
+              "type": "leaf",
+              "summary": "",
+              "children": [],
+              "time_anchor": 0.0,
+              "source_chapter_titles": [
+                "定义与用途"
+              ],
+              "source_chapter_starts": [
+                0.0
+              ]
+            }
+          ],
+          "time_anchor": null,
+          "source_chapter_titles": [
+            "视频中档：Agent 概念与功能",
+            "定义与用途",
+            "n8n平台的工具功能介绍"
+          ],
+          "source_chapter_starts": [
+            748.004,
+            0.0,
+            266.354
+          ]
+        }
+      ],
+      "time_anchor": null,
+      "source_chapter_titles": [
+        "n8n平台的工具功能介绍",
+        "展示如何使用n8n階建新的工作流，并逐步设置触发",
+        "编写提示词"
+      ],
+      "source_chapter_starts": [
+        266.354,
+        837.587,
+        1836.83
+      ]
+    }
+  ]
+}

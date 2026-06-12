@@ -1,0 +1,4 @@
+- [Cursor 终端发链接注意事项](cursor-usage.md) — 枫用 Cursor 终端，链接用 blob 定位到具体文件，让枫复制去浏览器打开
+- [GitHub 链接格式](github-link-format.md) — 发 GitHub 链接必须到具体文件页，不能用目录页
+- [ECC & Firecrawl 会话记录](ecc-session.md) — 2026-06-04: 不装 ECC，Firecrawl MCP 已装好，已读取多个 ECC 技能
+- [TTS 播报提速](tts-quick-tip.md) — 直接 tts_send.py，禁用 uvx edge-tts，不走弯路

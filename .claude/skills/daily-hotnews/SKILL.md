@@ -1,25 +1,42 @@
 ---
 name: daily-hotnews
-description: "每天早上9点自动推送10条热点新闻到枫的微信。用 hotnews 获取新闻，通过 Server酱 推送。"
-when_to_use: "用户说"早安新闻""热点""今天有什么新闻""每日推送"等场景"
+description: "每天早上9点自动推送10条热点新闻到微信。整合百度热搜、抖音热榜等多源热点，通过Server酱推送。使用时机：用户问'今天有什么新闻''早安新闻''热点''每日推送'，或每天早上9点定时推送。即使用户没主动问，也会自动在9点推送。"
+when_to_use: "用户说：早安新闻、今天有什么新闻、热点、每日推送、看看今天的新闻"
 ---
 
 # Daily Hotnews - 每日热点推送
 
-每天早上9点推送10条综合热点新闻到微信。
+每天早上 9:00 自动推送 10 条热点新闻到微信。
 
-## 推送流程
+## 推送内容格式
 
-1. 获取热点新闻（hotnews MCP / 百度热搜 / 微博热搜）
-2. 整理为标题+摘要格式，每天10条
-3. 通过 Server酱 推送到微信
+每条新闻包含：
+- **emoji 图标** — 根据内容自动匹配（科技🤖、手机📱、汽车🚗等）
+- **标题** — 加粗显示，带百度/抖音搜索链接
+- **摘要** — 一句话简介
+- **来源标签** — `<百度>` / `<抖音>`
+- **热度标记** — 前3条 🔥 标记
+- **底部祝福语** — "亲爱的枫，愿你今天元气满满..."
 
-## Server酱 配置
+## 技术架构
 
-- API: `https://sctapi.ftqq.com/{SENDKEY}.send`
-- SendKey: 存储在 GitHub Secrets (`SCT_KEY`)
-- 推送格式: POST + URL 编码
+| 组件 | 作用 | 位置 |
+|:----|:-----|:------|
+| cron-job.org | 每天 8:55 定时触发 | 外部服务 |
+| GitHub Actions | 运行脚本 | `.github/workflows/daily-hotnews.yml` |
+| Python 脚本 | 获取+格式化+推送 | `.github/scripts/daily-hotnews.py` |
+| Server酱 | 推送到微信 | `sct.ftqq.com` |
+| 百度热搜 API | 新闻数据源 | `top.baidu.com` |
+| 天聚数行 API | 抖音热榜（可选） | `tianapi.com` |
 
-## GitHub Actions
+## 数据源
 
-定时任务在 `.github/workflows/daily-hotnews.yml`，每天 UTC 1:00（北京时间 9:00）运行。
+1. **百度热搜** — 主数据源，稳定
+2. **抖音热榜** — 天聚数行 API（审核中）
+3. **备用** — 纯标题补全
+
+## 依赖
+
+- GitHub 账号 + Token
+- Server酱 SendKey（已配）
+- 天聚数行 API Key（选填）

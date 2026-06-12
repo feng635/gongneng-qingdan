@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>功能清单大全 | Nova</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#faf6f0;color:#3d3830;font-family:'Inter',system-ui,sans-serif;font-weight:400}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
+:root{--bg:#faf6f0;--surface:#ffffff;--surface-hover:#f5eee8;--border:#e8d8d0;--border-hover:#d0c0b8;--text:#3d3830;--muted:#8a7a72;--dim:#a89890;--accent:#d4647a;--accent-sub:#e0889a}
+h1{font-family:'DM Sans',sans-serif;font-size:clamp(2rem,5vw,4.2rem);font-weight:700;letter-spacing:-0.03em;line-height:1.05;color:var(--text)}
+h2{font-family:'DM Sans',sans-serif;font-size:clamp(1.3rem,3vw,2.2rem);font-weight:700;letter-spacing:-0.02em;line-height:1.15}
+h3{font-family:'DM Sans',sans-serif;font-size:clamp(0.95rem,1.5vw,1.15rem);font-weight:600;color:var(--text)}
+p{font-size:clamp(0.85rem,1.2vw,1rem);line-height:1.7;color:var(--muted)}
+.header{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 clamp(1rem,4vw,4rem);height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,246,240,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.header-logo{font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;color:var(--text);letter-spacing:-0.02em}
+.header-logo span{color:var(--accent)}
+.header-nav{display:flex;gap:1.5rem;list-style:none}
+.header-nav a{color:var(--muted);text-decoration:none;font-size:.75rem;font-weight:500;transition:.25s}
+.header-nav a:hover{color:var(--accent)}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 3rem;position:relative;background:linear-gradient(180deg,#faf6f0 0%,#f5eee6 100%)}
+.hero::before{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(212,100,122,0.06),transparent 70%);top:5%;right:-15%;pointer-events:none}
+.hero::after{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(212,100,122,0.04),transparent 70%);bottom:-10%;left:-10%;pointer-events:none}
+.hero-sub{font-size:.7rem;font-weight:600;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:.8rem}
+.hero-desc{font-size:clamp(.9rem,1.4vw,1.1rem);color:var(--muted);margin-top:.8rem;max-width:520px;line-height:1.6}
+.hero-stats{display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap;justify-content:center}
+.hero-stat{text-align:center}
+.hero-stat-num{font-family:'DM Sans',sans-serif;font-size:clamp(1.2rem,2vw,1.8rem);font-weight:700;color:var(--accent);line-height:1}
+.hero-stat-label{font-size:.6rem;color:var(--dim);margin-top:.2rem;letter-spacing:1px;text-transform:uppercase}
+.hero-categories{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;margin-top:1.5rem;max-width:500px}
+.hero-cat{font-size:.6rem;padding:.25em .7em;border-radius:5px;background:var(--surface);border:1px solid var(--border);color:var(--muted);transition:.25s}
+.hero-cat:hover{transform:translateY(-1px);border-color:var(--accent);color:var(--accent)}
+.hero-tags{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-top:1.5rem}
+.hero-tag{font-size:.7rem;padding:.3em .8em;border-radius:6px;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
+.hero-contact{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);width:100%;max-width:400px}
+.hero-contact p{font-size:.85rem;color:var(--dim);margin-bottom:.8rem}
+.social-links{display:flex;gap:1rem;justify-content:center}
+.social-link{width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;background:var(--surface);border:1px solid var(--border);text-decoration:none;transition:.25s}
+.social-link:hover{background:var(--surface-hover);border-color:var(--accent);transform:translateY(-2px)}
+.section{padding:clamp(3rem,8vw,6rem) clamp(1.5rem,6vw,6rem);max-width:1200px;margin:0 auto}
+.section-header{margin-bottom:1.5rem;position:relative}
+.section-label{font-family:'DM Sans',sans-serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:700;color:var(--dim);line-height:1;margin-bottom:0;opacity:0.15;position:absolute;top:-1rem;left:-0.3rem;pointer-events:none}
+.section h2{position:relative;z-index:1;padding-top:1rem}
+.section-desc{color:var(--muted);font-size:clamp(.85rem,1.2vw,1rem)}
+.grid{display:grid;gap:.6rem}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:clamp(.7rem,1.2vw,1rem);transition:all .3s ease;position:relative;cursor:pointer;overflow:hidden}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:12px 0 0 12px}
+.card[data-type="search"]::before{background:#8ab0d0}
+.card[data-type="media"]::before{background:#d08a98}
+.card[data-type="ai"]::before{background:#7ac0a8}
+.card[data-type="write"]::before{background:#90c090}
+.card[data-type="design"]::before{background:#d4a080}
+.card[data-type="office"]::before{background:#b89ad4}
+.card[data-type="dev"]::before{background:#8ab0c0}
+.card[data-type="other"]::before{background:var(--dim)}
+.card:hover{background:var(--surface-hover);border-color:var(--border-hover);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.2)}
+.card:active{transform:translateY(0)}
+.card-icon{font-size:1.2rem;vertical-align:middle}
+.card h3{display:inline;margin-left:.3rem;vertical-align:middle;font-size:clamp(.85rem,1.2vw,1rem)}
+.card p{font-size:.75rem;color:var(--muted);margin-top:.25rem;line-height:1.4}
+.card-tags{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.3rem}
+.card-tag{font-size:.55rem;padding:.1em .4em;border-radius:3px;background:#f0e8e0;color:var(--muted)}
+.card-tag-gold{background:rgba(212,100,122,0.1);color:var(--accent)}
+.skill-category{font-family:'DM Sans',sans-serif;font-size:clamp(.85rem,1.3vw,1.05rem);font-weight:600;color:var(--text);margin:1.8rem 0 .7rem;padding:1rem 0 0;border-top:1px solid var(--border);letter-spacing:-0.01em;position:relative;z-index:1}
+.skill-category:first-of-type{margin-top:0;border-top:none;padding-top:0}
+.empty-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;grid-column:1/-1}
+.empty-card .icon{font-size:2rem;margin-bottom:.5rem}
+.empty-card p{color:var(--dim);font-size:.85rem}
+.stats-section{padding:clamp(2rem,5vw,4rem) clamp(1.5rem,6vw,6rem);max-width:1200px;margin:0 auto}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem}
+.stat-card{text-align:center;padding:clamp(.8rem,1.5vw,1.2rem);background:var(--surface);border:1px solid var(--border);border-radius:12px;transition:.25s}
+.stat-card:hover{border-color:var(--border-hover);transform:translateY(-2px)}
+.stat-num{font-family:'DM Sans',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;color:var(--accent);line-height:1}
+.stat-label{font-size:.7rem;color:var(--muted);margin-top:.3rem}
+.footer{margin-top:3rem;padding:1.5rem clamp(1.5rem,6vw,6rem);max-width:1200px;margin-left:auto;margin-right:auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border)}
+.footer span{font-size:.75rem;color:var(--dim)}
+.reveal{opacity:0;transform:translateY(20px);transition:.6s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.active{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;max-width:560px;width:100%;max-height:80vh;overflow-y:auto;padding:clamp(1.2rem,3vw,2rem);position:relative;box-shadow:0 30px 60px rgba(0,0,0,0.3);animation:modalIn .35s ease}
+.modal-desc p{font-size:.9rem;line-height:1.8;color:var(--muted);margin-bottom:.4rem}
+.modal-desc code{font-size:.8rem;background:rgba(212,100,122,0.08);color:#c06070;padding:.15em .5em;border-radius:4px;word-break:break-all}
+.modal-desc b{color:var(--text)}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(15px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--dim);font-size:1.1rem;cursor:pointer;transition:.25s;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{color:var(--text);background:var(--surface-hover)}
+.modal-icon{font-size:2.2rem;margin-bottom:.4rem}
+.modal-title{font-family:'DM Sans',sans-serif;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:700;color:var(--text);margin-bottom:.5rem}
+.modal-desc{line-height:1.8;color:var(--muted);font-size:clamp(.85rem,1.2vw,1rem)}
+.modal-desc p{margin-bottom:.5rem;color:var(--muted)}.modal code{color:var(--accent);background:rgba(212,100,122,0.1);padding:.1em .4em;border-radius:3px}
+@media(max-width:768px){.header-nav{display:none}.grid-2,.grid-3,.grid-4{grid-template-columns:1fr 1fr}.stats-grid{grid-template-columns:1fr 1fr}.hero{padding:5rem 1.5rem 3rem}.section-label{font-size:clamp(2rem,8vw,3rem)}}
+@media(max-width:480px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}}
+
+/* ========== 宆酷动效增强 ========== */
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+.hero h1{background:linear-gradient(90deg,var(--text)0%,var(--accent)50%,var(--text)100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s ease-in-out infinite}
+.card:hover::after{content:'';position:absolute;inset:0;border-radius:12px;background:linear-gradient(135deg,rgba(212,100,122,0.08),rgba(212,100,122,0.02));pointer-events:none}
+.card:hover{transform:translateY(-4px) scale(1.01);border-color:var(--accent);box-shadow:0 8px 30px rgba(212,100,122,0.15)}
+.reveal-left{transform:translateX(-40px)}.reveal-right{transform:translateX(40px)}.reveal-up{transform:translateY(40px)}.reveal-scale{transform:scale(0.8)}
+.reveal.visible{opacity:1;transform:translateX(0) translateY(0) scale(1)}
+@keyframes floatBg{0%,100%{transform:translateY(0)rotate(0deg)}50%{transform:translateY(-30px)rotate(180deg)}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-logo">功能清单<span>.</span></div>
+  <ul class="header-nav">
+    <li><a href="#commands">命令</a></li>
+    <li><a href="#skills">Skill</a></li>
+    <li><a href="#mcp">MCP</a></li>
+    <li><a href="#cli">CLI</a></li><li><a href="#others">其他</a></li><li><a href="#stats">统计</a></li>
+  </ul>
+</header>
+
+<section class="hero">
+  <p class="hero-sub reveal">CLAUDE CODE · NOVA</p>
+  <h1 class="reveal" style="transition-delay:.1s">功能清单大全</h1>
+  <p class="hero-desc reveal" style="transition-delay:.15s">一个汇集了所有已安装技能和工具的完整目录<br>从 AI 辅助编程到视频制作，从写作到设计，一目了然</p>
+
+  <div class="hero-stats reveal" style="transition-delay:.2s">
+    <div class="hero-stat"><div class="hero-stat-num">52</div><div class="hero-stat-label">功能总数</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">37</div><div class="hero-stat-label">技能</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">10</div><div class="hero-stat-label">MCP</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">8</div><div class="hero-stat-label">分类</div></div>
+  </div>
+
+  <div class="hero-categories reveal" style="transition-delay:.25s">
+    <span class="hero-cat">🔧 命令</span>
+    <span class="hero-cat">📦 Skill</span>
+    <span class="hero-cat">🌐 MCP</span>
+    <span class="hero-cat">💻 CLI</span>
+    <span class="hero-cat">🔌 插件</span>
+    <span class="hero-cat">⏳ Hook</span>
+    <span class="hero-cat">🔮 Subagent</span>
+  </div>
+
+  <div class="hero-tags reveal" style="transition-delay:.3s">
+    <span class="hero-tag">🖱️ 点击卡片看详情</span><span class="hero-tag">⬇️ 向下滚动浏览</span><span class="hero-tag">📋 共43项功能</span>
+  </div>
+  <div style="margin-top:2rem;animation:bounce 2s ease-in-out infinite;opacity:0.3">
+    <svg width="20" height="30" viewBox="0 0 20 30" fill="none"><path d="M10 5v15M5 15l5 5 5-5" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <style>@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}</style>
+
+  <div class="hero-contact reveal" style="transition-delay:.35s">
+    <p>📧 905879878@qq.com</p>
+    <div class="social-links">
+      <a class="social-link" href="https://www.xiaohongshu.com" target="_blank">📕</a>
+      <a class="social-link" href="https://www.bilibili.com" target="_blank">📺</a>
+      <a class="social-link" href="https://www.douyin.com" target="_blank">🎵</a>
+      <a class="social-link" href="https://weibo.com" target="_blank">📱</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="commands">
+  <div class="section-header reveal"><p class="section-label">1</p><h2>命令</h2></div>
+  <div class="grid grid-2">
+    <div class="card reveal" onclick="showDetail('commit')"><span class="card-icon">📝</span><h3>/commit</h3><p>自动分析代码改动，生成规范的 Git 提交信息。</p></div>
+    <div class="card reveal" onclick="showDetail('todo')"><span class="card-icon">✅</span><h3>/todo</h3><p>在项目根目录维护待办清单，跟踪任务进度。</p></div>
+  </div>
+</section>
+
+<section class="section" id="skills">
+  <div class="section-header reveal"><p class="section-label">2</p><h2>Skill</h2><p class="section-desc">共36项技能，按类别分组</p></div>
+
+  <!-- 🔍 搜索 & 数据抓取 -->
+  <h3 class="skill-category reveal">🔍 搜索 &amp; 数据抓取</h3>
+  <div class="grid grid-4">
+    <div class="card reveal" data-type="search" onclick="showDetail('search')"><span class="card-icon">🔎</span><h3>search</h3><div class="card-tags"><span class="card-tag">OpenCLI</span></div></div>
+    <div class="card reveal" data-type="search" onclick="showDetail('web-fetch')"><span class="card-icon">🌐</span><h3>web-fetch</h3><div class="card-tags"><span class="card-tag">代理</span></div></div>
+    <div class="card reveal" data-type="media" onclick="showDetail('bilisum')"><span class="card-icon">📹</span><h3>bilisum</h3><div class="card-tags"><span class="card-tag">视频总结</span></div></div>
+    
+  </div>
+
+  <!-- 👁️ OCR 识图 -->
+  <h3 class="skill-category reveal">👁️ OCR 识图</h3>
+  <div class="grid grid-4">
+    <div class="card reveal" data-type="search" onclick="showDetail('ocr')"><span class="card-icon">🔍</span><h3>ocr</h3><div class="card-tags"><span class="card-tag">Tesseract</span></div></div>
+    <div class="card reveal" data-type="search" onclick="showDetail('ocr-document-processor')"><span class="card-icon">📄</span><h3>ocr-doc</h3><div class="card-tags"><span class="card-tag">扫描件</span></div></div>
+    <div class="card reveal" data-type="search" onclick="showDetail('paddleocr')"><span class="card-icon">🈶</span><h3>paddleocr</h3><div class="card-tags"><span class="card-tag">CJK</span></div></div>
+    <div class="card reveal" data-type="search" onclick="showDetail('smart-ocr')"><span class="card-icon">🧠</span><h3>smart-ocr</h3><div class="card-tags"><span class="card-tag">综合</span></div></div>
+  </div>
+
+  <!-- 🎬 视频 & AI 生成 -->
+  <h3 class="skill-category reveal">🎬 视频 &amp; AI 生成</h3>
+  <div class="grid grid-4">
+    <div class="card reveal" data-type="media" onclick="showDetail('video-editing')"><span class="card-icon">🎬</span><h3>video-editing</h3><div class="card-tags"><span class="card-tag">ECC</span></div></div>
+    <div class="card reveal" data-type="media" onclick="showDetail('remotion')"><span class="card-icon">🎥</span><h3>remotion</h3><div class="card-tags"><span class="card-tag">ECC</span></div></div>
+    <div class="card reveal" data-type="ai" onclick="showDetail('video-edit')"><span class="card-icon">🎬</span><h3>video-edit</h3><div class="card-tags"><span class="card-tag">skills.sh</span><span class="card-tag">RunComfy</span></div></div>
+    <div class="card reveal" data-type="ai" onclick="showDetail('ai-video-generation')"><span class="card-icon">🎥</span><h3>ai-video</h3><div class="card-tags"><span class="card-tag">skills.sh</span><span class="card-tag">RunComfy</span></div></div>
+    <div class="card reveal" data-type="ai" onclick="showDetail('ai-avatar-video')"><span class="card-icon">👤</span><h3>ai-avatar</h3><div class="card-tags"><span class="card-tag">skills.sh</span><span class="card-tag">RunComfy</span></div></div>
+    <div class="card reveal" data-type="ai" onclick="showDetail('ai-image-generation')"><span class="card-icon">🖼️</span><h3>ai-image</h3><div class="card-tags"><span class="card-tag">skills.sh</span><span class="card-tag">RunComfy</span></div></div>
+  </div>
+
+  <!-- 🎨 设计 & 前端 -->
+  <h3 class="skill-category reveal">🎨 设计 &amp; 前端</h3>
+  <div class="grid grid-4">
+    <div class="card reveal" data-type="design" onclick="showDetail('frontend-design')"><span class="card-icon">🎨</span><h3>frontend-design</h3><div class="card-tags"><span class="card-tag">skills.sh</span></div></div>
+    <div class="card reveal" data-type="office" onclick="showDetail('frontend-slides')"><span class="card-icon">📊</span><h3>frontend-slides</h3><div class="card-tags"><span class="card-tag">ECC</span></div></div>
+    <div class="card reveal" data-type="design" onclick="showDetail('design-system')"><span class="card-icon">🎨</span><h3>design-system</h3><div class="card-tags"><span class="card-tag">ECC</span></div></div>
+    <div class="card reveal" data-type="design" onclick="showDetail('seo')"><span class="card-icon">🌐</span><h3>seo</h3><div class="card-tags"><span class="card-tag">ECC</span></div></div>
+    <div class="card reveal" data-type="design" onclick="showDetail('shadcn')"><span class="card-icon">🧩</span><h3>shadcn</h3><div class="card-tags"><span class="card-tag">skills.sh</span></div></div>
+  </div>
+
+  <!-- ✍️ 写作 & 学习 -->
+  <h3 class="skill-category reveal">✍️ 写作 &amp; 学习</h3>
+  <div class="grid grid-4">
+    <div class="card reveal" data-type="write" onclick="showDetail('article-writing')"><span class="card-icon">✍️</span><h3>article-writing</h3><div class="card-tags"><span class="card-tag">ECC</span></div></div>
+    <div class="card reveal" data-type="write" onclick="showDetail('prompt-optimizer')"><span class="card-icon">🎯</span><h3>prompt-optimizer</h3><div class="card-tags"><span class="card-tag">ECC</span></div></div>
+    <div class="card reveal" data-type="dev" onclick="showDetail('grill-me')"><span class="card-icon">🔥</span><h3>grill-me</h3><div class="card-tags"><span class="card-tag">skills.sh</span></div></div>
+    <div class="card reveal" data-type="write" onclick="showDetail('edge-tts')"><span class="card-icon">🔊</span><h3>edge-tts</h3><div class="card-tags"><span class="card-tag">火山引擎</span></div></div>
+  </div>
+
+  <!-- 🛠️ 开发 & 调试 -->
+  <h3 class="skill-category reveal">🛠️ 开发 &amp; 调试</h3>
+  <div class="grid grid-4">
+    <div class="card reveal" data-type="dev" onclick="showDetail('systematic-debugging')"><span class="card-icon">🐛</span><h3>debugging</h3><div class="card-tags"><span class="card-tag">skills.sh</span></div></div>
+    <div class="card reveal" data-type="dev" onclick="showDetail('agent-browser')"><span class="card-icon">🌐</span><h3>agent-browser</h3><div class="card-tags"><span class="card-tag">skills.sh</span></div></div>
+    <div class="card reveal" data-type="dev" onclick="showDetail('deep-research')"><span class="card-icon">🔬</span><h3>deep-research</h3><div class="card-tags"><span class="card-tag card-tag-gold">内置</span></div></div>
+	    <div class="card reveal" data-type="dev" onclick="showDetail('superpowers')"><span class="card-icon">⚡</span><h3>superpowers</h3><div class="card-tags"><span class="card-tag">工程化</span></div></div>
+	    <div class="card reveal" data-type="dev" onclick="showDetail('skill-creator')"><span class="card-icon">🏭</span><h3>skill-creator</h3><div class="card-tags"><span class="card-tag">官方</span></div></div>
+	    <div class="card reveal" data-type="dev" onclick="showDetail('daily-hotnews')"><span class="card-icon">📰</span><h3>daily-hotnews</h3><div class="card-tags"><span class="card-tag">自动化</span></div></div>
+    <div class="card reveal" data-type="dev" onclick="showDetail('desktop-control')"><span class="card-icon">🖥️</span><h3>desktop-control</h3><div class="card-tags"><span class="card-tag">skills.sh</span></div></div>
+	    <div class="card reveal" data-type="dev" onclick="showDetail('file-organizer')"><span class="card-icon">📂</span><h3>file-organizer</h3><div class="card-tags"><span class="card-tag">awesome</span></div></div>
+  </div>
+
+  <!-- 🤖 AI 增强 -->
+  <h3 class="skill-category reveal">🤖 AI 增强</h3>
+  <div class="grid grid-4">
+    <div class="card reveal" data-type="dev" onclick="showDetail('self-improving-agent')"><span class="card-icon">🧠</span><h3>self-improving</h3><div class="card-tags"><span class="card-tag">Agent</span></div></div>
+    <div class="card reveal" data-type="dev" onclick="showDetail('proactive-agent')"><span class="card-icon">⏰</span><h3>proactive-agent</h3><div class="card-tags"><span class="card-tag">Agent</span></div></div>
+    <div class="card reveal" data-type="dev" onclick="showDetail('skill-vetter')"><span class="card-icon">🛡️</span><h3>skill-vetter</h3><div class="card-tags"><span class="card-tag">Agent</span></div></div>
+    <div class="card reveal" data-type="dev" onclick="showDetail('auto-updater')"><span class="card-icon">🔄</span><h3>auto-updater</h3><div class="card-tags"><span class="card-tag">Agent</span></div></div>
+    
+  </div>
+
+  <!-- 📄 办公文档 -->
+  <h3 class="skill-category reveal">📄 办公文档</h3>
+  <div class="grid grid-4">
+    <div class="card reveal" data-type="office" onclick="showDetail('pptx')"><span class="card-icon">📊</span><h3>pptx</h3><div class="card-tags"><span class="card-tag">skills.sh</span></div></div>
+    <div class="card reveal" data-type="office" onclick="showDetail('docx')"><span class="card-icon">📝</span><h3>docx</h3><div class="card-tags"><span class="card-tag">skills.sh</span></div></div>
+    <div class="card reveal" data-type="office" onclick="showDetail('xlsx')"><span class="card-icon">📊</span><h3>xlsx</h3><div class="card-tags"><span class="card-tag">skills.sh</span></div></div>
+    <div class="card reveal" data-type="office" onclick="showDetail('pdf')"><span class="card-icon">📄</span><h3>pdf</h3><div class="card-tags"><span class="card-tag">skills.sh</span></div></div>
+  </div>
+</section>
+
+<section class="section" id="mcp">
+  <div class="section-header reveal"><p class="section-label">3</p><h2>MCP</h2></div>
+  <div class="grid grid-4">
+    <div class="card reveal" onclick="showDetail('firecrawl')"><span class="card-icon">🔥</span><h3>Firecrawl</h3><p>搜索·抓取·提取·爬虫</p><div class="card-tags"><span class="card-tag">500次/月</span></div></div>
+    <div class="card reveal" onclick="showDetail('ide')"><span class="card-icon">💻</span><h3>IDE</h3><p>VS Code诊断 + Jupyter代码执行</p><div class="card-tags"><span class="card-tag card-tag-gold">内置</span></div></div>
+    <div class="card reveal" onclick="showDetail('github-mcp')"><span class="card-icon">🐙</span><h3>GitHub</h3><p>管理仓库/Issue/PR</p><div class="card-tags"><span class="card-tag">需Token</span></div></div>
+    <div class="card reveal" onclick="showDetail('playwright-mcp')"><span class="card-icon">🎭</span><h3>Playwright</h3><p>浏览器自动化操控</p><div class="card-tags"><span class="card-tag">微软</span></div></div>
+    <div class="card reveal" onclick="showDetail('weather-mcp')"><span class="card-icon">🌤️</span><h3>彩云天气</h3><p>天气预报·降水·预警</p><div class="card-tags"><span class="card-tag">彩云</span></div></div>
+    <div class="card reveal" onclick="showDetail('hotnews-mcp')"><span class="card-icon">📰</span><h3>hotnews</h3><p>实时热点新闻获取</p><div class="card-tags"><span class="card-tag">Wopal</span></div></div>
+    <div class="card reveal" onclick="showDetail('files-mcp')"><span class="card-icon">📁</span><h3>files</h3><p>桌面文件读写管理</p><div class="card-tags"><span class="card-tag">官方</span></div></div>
+    <div class="card reveal" onclick="showDetail('knowledge-mcp')"><span class="card-icon">🧠</span><h3>Knowledge Graph</h3><p>AI知识图谱记忆</p><div class="card-tags"><span class="card-tag">官方</span></div></div>
+    <div class="card reveal" onclick="showDetail('thinking-mcp')"><span class="card-icon">💭</span><h3>Sequential Thinking</h3><p>链式结构化推理</p><div class="card-tags"><span class="card-tag">官方</span></div></div>
+    <div class="card reveal" onclick="showDetail('docfork-mcp')"><span class="card-icon">📚</span><h3>Docfork</h3><p>文档搜索与抓取</p><div class="card-tags"><span class="card-tag">需授权</span></div></div>
+  </div>
+</section>
+
+<section class="section" id="cli">
+  <div class="section-header reveal"><p class="section-label">4</p><h2>CLI</h2></div>
+  <div class="grid grid-3">
+    <div class="card reveal" onclick="showDetail('opencli')"><span class="card-icon">💻</span><h3>opencli</h3><p>小红书/知乎/B站/微博/抖音搜索</p><div class="card-tags"><span class="card-tag">npm</span></div></div>
+    <div class="card reveal" onclick="showDetail('bilisum-cli')"><span class="card-icon">📹</span><h3>bilisum</h3><p>B站/YouTube视频 AI总结</p><div class="card-tags"><span class="card-tag">npx</span></div></div>
+    <div class="card reveal" onclick="showDetail('edge-tts-cli')"><span class="card-icon">🔊</span><h3>edge-tts</h3><p>微软Edge神经语音合成</p><div class="card-tags"><span class="card-tag">uvx</span></div></div>
+  </div>
+</section>
+
+<section class="section" id="others">
+  <div class="section-header reveal"><p class="section-label">5-7</p><h2>插件 · Hook · Subagent</h2></div>
+  <div class="grid grid-3">
+    <div class="empty-card reveal"><div class="icon">🔌</div><p>插件 — 暂无已安装</p></div>
+    <div class="empty-card reveal"><div class="icon">⏳</div><p>Hook — 暂未开发</p></div>
+    <div class="empty-card reveal"><div class="icon">🔮</div><p>Subagent — 暂未涉及</p></div>
+  </div>
+</section>
+
+<section class="stats-section" id="stats">
+  <div class="section-header reveal"><p class="section-label">SUMMARY</p><h2>统计</h2></div>
+  <div class="stats-grid">
+    <div class="stat-card reveal"><div class="stat-num">2</div><div class="stat-label">命令</div></div>
+    <div class="stat-card reveal"><div class="stat-num">37</div><div class="stat-label">技能</div></div>
+    <div class="stat-card reveal"><div class="stat-num">10</div><div class="stat-label">MCP</div></div>
+    <div class="stat-card reveal"><div class="stat-num">3</div><div class="stat-label">CLI</div></div>
+    <div class="stat-card reveal"><div class="stat-num">0</div><div class="stat-label">插件</div></div>
+    <div class="stat-card reveal"><div class="stat-num">0</div><div class="stat-label">Hook</div></div>
+    <div class="stat-card reveal"><div class="stat-num">0</div><div class="stat-label">Subagent</div></div>
+    <div class="stat-card reveal" style="border-color:rgba(212,100,122,0.15)"><div class="stat-num" style="color:var(--text)">52</div><div class="stat-label" style="color:var(--accent)">总计</div></div>
+  </div>
+  <!-- 来源分布 -->
+  <div style="margin-top:2rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+    <div class="reveal" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem">
+      <p style="font-size:.65rem;font-weight:600;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:.8rem">📦 技能来源分布</p>
+      <div style="display:flex;flex-direction:column;gap:.5rem">
+        <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.15rem"><span>ECC 仓库</span><span style="color:var(--accent);font-weight:600">9</span></div><div style="height:6px;background:#e8d8d0;border-radius:3px;overflow:hidden"><div style="height:100%;width:35%;background:#d4647a;border-radius:3px"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.15rem"><span>skills.sh 商店</span><span style="color:var(--accent);font-weight:600">14</span></div><div style="height:6px;background:#e8d8d0;border-radius:3px;overflow:hidden"><div style="height:100%;width:58%;background:#e0889a;border-radius:3px"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.15rem"><span>Claude Code 内置</span><span style="color:var(--accent);font-weight:600">2</span></div><div style="height:6px;background:#e8d8d0;border-radius:3px;overflow:hidden"><div style="height:100%;width:7%;background:#c87a8a;border-radius:3px"></div></div></div>
+      </div>
+    </div>
+    <div class="reveal" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem">
+      <p style="font-size:.65rem;font-weight:600;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:.8rem">🏷️ 分类统计</p>
+      <div style="display:flex;flex-direction:column;gap:.4rem">
+        <div style="display:flex;justify-content:space-between;font-size:.75rem"><span>🔍 搜索&amp;数据</span><span style="color:var(--accent)">3</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.75rem"><span>👁️ OCR识图</span><span style="color:var(--accent)">4</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.75rem"><span>🎬 视频&amp;AI</span><span style="color:var(--accent)">6</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.75rem"><span>🎨 设计&amp;前端</span><span style="color:var(--accent)">5</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.75rem"><span>✍️ 写作&amp;语音</span><span style="color:var(--accent)">4</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.75rem"><span>🛠️ 开发&amp;调试</span><span style="color:var(--accent)">4</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.75rem"><span>📄 办公文档</span><span style="color:var(--accent)">4</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.75rem"><span>🤖 AI增强</span><span style="color:var(--accent)">5</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>📧 905879878@qq.com</span><span>2026.06.07 · 共42项</span></div>
+</section>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal"><button class="modal-close" id="modalClose">✕</button><div id="modalContent"></div></div>
+</div>
+
+<script>
+const details={
+	  'superpowers':{icon:'⚡',title:'superpowers — 工程化开发框架',desc:'一套完整的 AI 编程流程框架。<br><br><b>核心流程：</b><br>🧠 头脑风暴 → 理清需求<br>📋 写计划 → 拆解任务<br>🔨 执行计划 → 逐步编码<br>✅ TDD → 测试驱动开发<br>👀 代码审查 → 保证质量<br>🏁 收尾 → 清理完成<br><br><b>包含14个子技能：</b>brainstorming、writing-plans、executing-plans、test-driven-development 等。<br><br><b>安装：</b>pip install agent-superpowers'},
+	  'skill-creator':{icon:'🏭',title:'skill-creator — 技能生成器',desc:'Anthropic 官方出品的元技能，用于创建和优化自定义 Skill。<br><br><b>流程：</b><br>1. 描述你想创建的技能<br>2. AI 生成标准 SKILL.md 和目录结构<br>3. 自动生成测试用例<br>4. 评估和迭代优化<br><br><b>用法：</b>直接说「用 skill-creator 创建一个xxx技能」'},
+	  'daily-hotnews':{icon:'📰',title:'daily-hotnews — 每日热点推送',desc:'每天早上 9:00 自动推送 10 条热点新闻到微信。<br><br><b>数据来源：</b><br>• 百度热搜<br>• 抖音热榜（申请中）<br><br><b>推送方式：</b>GitHub Actions + Server酱<br><br><b>格式：</b>每条带 emoji + 简介 + 链接，前3条🔥标记，底部有每日祝福语。<br><br><b>位置：</b>.github/workflows/daily-hotnews.yml'},
+
+  commit:{icon:'📝',title:'/commit — 智能提交',desc:'自动分析工作区的改动文件，生成规范的Git提交信息（带emoji）。<br><br><b>用法：</b>在终端输入 <code>/commit</code>，Nova会扫描改动→生成commit信息→你确认后自动提交。'},
+  todo:{icon:'✅',title:'/todo — 待办管理',desc:'在项目根目录维护一个待办清单文件（todos.md），帮你跟踪任务进度。<br><br><b>用法：</b>输入 <code>/todo</code> 查看/添加任务。<br><b>支持：</b>添加任务、标记完成、查看未完成项。'},
+  ocr:{icon:'🔍',title:'ocr — 图片识文字',desc:'用Tesseract引擎识别图片中的文字。<br><br><b>用法：</b><br><code>export TESSDATA_PREFIX="C:/Users/17384/AppData/Local/tesseract/tessdata"</code><br><code>"C:\\Program Files\\Tesseract-OCR\\tesseract.exe" 图片路径 stdout -l chi_sim+eng</code><br><br><b>识别顺序：</b>先中英混合 → 失败后切纯英文。'},
+  'ocr-document-processor':{icon:'📄',title:'ocr-document-processor — 文档OCR',desc:'专门处理扫描件、表格、收据等文档类图片，提取结构化文字信息。<br><br><b>适用场景：</b><br>• 扫描的PDF/文档 → 提取正文<br>• 表格/收据 → 结构化输出<br>• 比普通OCR更适合文档类。'},
+  paddleocr:{icon:'🈶',title:'paddleocr — PaddleOCR识图',desc:'百度PaddleOCR引擎，对中日韩等CJK文字识别更强。<br><br><b>适用场景：</b><br>• 小字、手写体识别<br>• 中文/日文/韩文混合文档<br>• 普通OCR识别不理想时备选。<br><br><b>注意：</b>需联网调用云API。'},
+  'smart-ocr':{icon:'🧠',title:'smart-ocr — 综合OCR',desc:'综合多种OCR引擎，智能选择最佳识别方案。<br><br><b>工作方式：</b>自动检测图片类型（文档/截图/手写等），匹配最优OCR引擎。<br><br>适用于不确定哪种OCR更好的情况。'},
+  search:{icon:'🔎',title:'search — 多平台搜索',desc:'通过OpenCLI搜索小红书、知乎、B站、微博、抖音。<br><br><b>用法：</b><br><code>opencli xiaohongshu search "关键词"</code><br><code>opencli bilibili search "关键词"</code><br><code>opencli zhihu search "关键词"</code><br><code>opencli douyin search "关键词"</code><br><br><b>前提：</b>Edge浏览器必须开着且扩展已连接。<br>查状态：<code>opencli doctor</code>'},
+  'web-fetch':{icon:'🌐',title:'web-fetch — 代理抓取',desc:'通过本地代理访问被墙的网站内容（GitHub、Bilibili API等）。<br><br><b>用法：</b><br>先设置代理：<br><code>export HTTP_PROXY=http://127.0.0.1:7897</code><br><code>export HTTPS_PROXY=http://127.0.0.1:7897</code><br><br>然后正常curl：<br><code>curl -sL --ssl-no-revoke https://api.github.com/repos/...</code><br><br>需要本地有Clash等加速器运行中。'},
+  bilisum:{icon:'📹',title:'bilisum — 视频AI总结',desc:'B站/YouTube视频的AI转写+总结+思维导图。<br><br><b>启动：</b><br><code>npx bilisum start --data "D:/cursor_workspace/bilisum-data"</code><br><br>启动后访问 <code>http://127.0.0.1:3838</code> 使用Web界面。<br><br><b>功能：</b><br>• 语音转文字（ASR）<br>• AI自动生成摘要<br>• 思维导图导出<br>• 多视频知识库问答。<br><br>需在SiliconFlow配置API Key。'},
+  'article-writing':{icon:'✍️',title:'article-writing — 文章写作',desc:'写博客、教程、文章，让内容不像AI写的。<br><br><b>核心原则：</b><br>• 先给干货、再解释，拒绝废话<br>• 用证据说话，不用形容词堆砌<br>• 避免AI腔（"在这个快速发展的时代"等）<br>• 可模仿指定风格/品牌语调。<br><br><b>适用：</b>博客、教程、新闻稿、社交媒体文案。'},
+  'prompt-optimizer':{icon:'🎯',title:'prompt-optimizer — 提示词优化',desc:'分析你的指令缺了什么信息，补全后输出优化版，让AI一次就懂你意思。<br><br><b>适用场景：</b><br>• 写提示词总是得不到想要的结果<br>• 缺少上下文/角色/格式说明<br>• 想让AI更准确地理解你的需求。<br><br>把你的草稿发给Nova，自动补全缺失信息。'},
+  'frontend-slides':{icon:'📊',title:'frontend-slides — HTML幻灯片',desc:'用HTML做PPT幻灯片，零依赖，浏览器直接打开。<br><br><b>功能：</b><br>• 键盘翻页、触屏滑动<br>• 手机自适应<br>• 支持PPT/PPTX转网页<br>• 代码高亮、数学公式<br><br><b>用法：</b>直接描述你想要的主题和大纲，Nova生成HTML文件。'},
+  'video-editing':{icon:'🎬',title:'video-editing — AI辅助剪辑',desc:'从素材到出片的完整视频剪辑流程。<br><br><b>流程：</b><br>1. 收集素材（Screen Studio/相机拍摄）<br>2. AI规划结构（Claude分析内容）<br>3. FFmpeg裁剪（按时间线切分）<br>4. Remotion合成（加字幕/动画/特效）<br>5. 剪映精修（调色、混音）<br><br><b>核心命令：</b><br><code>ffmpeg -i raw.mp4 -ss 12:30 -to 15:45 -c copy seg.mp4</code>'},
+  remotion:{icon:'🎥',title:'remotion — 代码做视频',desc:'用React代码编程生成MP4视频。<br><br><b>适用场景：</b><br>• 片头动画、Logo展示<br>• 数据可视化图表视频<br>• 批量模板快速出片<br>• 字幕、特效、过渡动画<br><br><b>渲染命令：</b><br><code>npx remotion render src/index.ts Composition output.mp4</code><br><br>所有画面都由React组件定义，可复用可编程。'},
+  seo:{icon:'🌐',title:'seo — 搜索引擎优化',desc:'让你的网站被百度/谷歌搜到。<br><br><b>优化项目：</b><br>• 技术SEO：robots.txt、sitemap、规范标签<br>• 页面优化：标题、描述、标题结构<br>• 结构化数据：JSON-LD（Article、Product等）<br>• 性能：LCP&lt;2.5s、INP&lt;200ms<br>• 关键词映射和内部链接策略。<br><br><b>适用：</b>个人主页、博客、商品页。'},
+  'deep-research':{icon:'🔬',title:'deep-research — 深度研究',desc:'Claude Code内置的Workflow技能，用于多源深度研究。<br><br><b>流程：</b><br>1. 拆解研究问题 → 5个角度<br>2. 多源搜索和抓取<br>3. 交叉验证事实<br>4. 输出带引用的研究报告<br><br><b>用法：</b>直接告诉Nova想研究什么课题，用Workflow调用。<br><br>比普通搜索更系统、更全面。'},
+  'design-system':{icon:'🎨',title:'design-system — 网站风格设计',desc:'生成设计系统+视觉评分+检测AI风。<br><br><b>三种模式：</b><br>1. <b>生成设计系统：</b>扫描代码→提取配色/字体/间距→生成设计令牌+预览页<br>2. <b>视觉审计：</b>10个维度打分（颜色一致性、层级、间距节奏等）<br>3. <b>AI风检测：</b>识别"紫色渐变、毛玻璃、过度圆角"等AI典型特征。<br><br><b>用法：</b><br><code>/design-system generate --style minimal</code><br><code>/design-system audit --url http://localhost:3000</code>'},
+  'grill-me':{icon:'🔥',title:'grill-me — 连环追问',desc:'把你的想法告诉Nova，它会连环追问直到每个细节都想清楚。<br><br><b>适用场景：</b><br>• 做项目前理清思路<br>• 复习知识点<br>• 检查方案有没有漏洞<br><br><b>用法：</b>说"grill me" + 你的想法/计划，Nova会一个问题接一个问题追问。'},
+  'systematic-debugging':{icon:'🐛',title:'systematic-debugging — 系统化调试',desc:'遇到bug不知道从哪下手？系统化排查流程：<br><br><b>步骤：</b><br>1. 复现Bug：确认复现步骤<br>2. 缩小范围：二分法定位<br>3. 分析根因：检查日志/堆栈<br>4. 修复验证：改代码→确认修复<br><br><b>用法：</b>描述你遇到的bug，Nova按4步流程带你排查。'},
+  'agent-browser':{icon:'🌐',title:'agent-browser — 浏览器操控',desc:'让AI操控浏览器做自动化操作。<br><br><b>能做的事：</b><br>• 打开网页、点击按钮<br>• 填写表单、提交数据<br>• 截图验证操作结果<br>• 自动填表/测试<br><br><b>用法：</b>告诉Nova想在浏览器里做什么操作即可。'},
+  shadcn:{icon:'🧩',title:'shadcn — UI组件库',desc:'基于Radix的漂亮React组件库，按钮/卡片/弹窗/表格等开箱即用。<br><br><b>添加组件：</b><br><code>npx shadcn@latest add button card dialog</code><br><br><b>搜索组件：</b><br><code>npx shadcn@latest search @shadcn -q "sidebar"</code><br><br><b>核心规则：</b>用<code>FieldGroup+Field</code>做表单，<code>gap-*</code>代替<code>space-*</code>，语义化颜色。'},
+  'just-scrape':{icon:'🕷️',title:'just-scrape — 网页抓取',desc:'基于ScrapeGraphAI的网页数据抓取工具。<br><br><b>用法：</b><br>搜索：<code>just-scrape search "关键词"</code><br>抓取：<code>just-scrape scrape "https://..." -f markdown</code><br>提取：<code>just-scrape extract "https://..." -p "提取商品名称和价格" --schema "..."</code><br>爬取：<code>just-scrape crawl "https://..." --max-pages 50</code><br><br>需设置<code>SGAI_API_KEY</code>环境变量。操作消耗API积分。'},
+  'frontend-design':{icon:'🎨',title:'frontend-design — 前端设计',desc:'前端界面设计规范，让网页做得更好看。<br><br><b>关注点：</b><br>• 字体排印：选独特好看的字体，避免默认<br>• 色彩主题：统一配色，CSS变量一致性<br>• 动效设计：入场动画、悬停反馈<br>• 空间布局：不对称、重叠、留白<br>• 背景细节：渐变、纹理、噪点<br><br><b>原则：</b>不搞AI千篇一律的风格，做有辨识度的设计。'},
+  pptx:{icon:'📊',title:'pptx — PowerPoint生成',desc:'生成专业的PowerPoint文件。<br><br><b>用法：</b>把内容大纲发给我，直接出PPT。<br><br><b>特点：</b><br>• 排版整齐、配色统一<br>• 支持图表、图片<br>• 直接可用的.pptx文件<br><br>适合汇报、展示、教学课件。'},
+  docx:{icon:'📝',title:'docx — Word文档生成',desc:'生成规范的Word文档。<br><br><b>用法：</b>提供内容，Nova生成.docx文件。<br><br><b>特点：</b><br>• 自动排版（标题层级、段落间距）<br>• 支持目录、表格、图片<br>• 直接可用的正式文档<br><br>适合报告、简历、论文、合同。'},
+  xlsx:{icon:'📊',title:'xlsx — Excel表格生成',desc:'生成Excel表格文件，带公式和格式化。<br><br><b>用法：</b>提供数据或需求，Nova生成.xlsx文件。<br><br><b>特点：</b><br>• 用Excel公式而非硬编码值<br>• 专业字体和配色<br>• 支持图表、多工作表<br>• 自动检查公式错误<br><br>适合数据统计、课程表、财务报表。'},
+  pdf:{icon:'📄',title:'pdf — PDF生成',desc:'生成PDF文件。<br><br><b>用法：</b>提供内容，Nova生成PDF。<br><br><b>适用：</b><br>• 电子文档<br>• 简历<br>• 报告<br>• 正式文件<br><br>排版美观，直接可用。'},
+  firecrawl:{icon:'🔥',title:'Firecrawl — 网页数据工具',desc:'MCP集成的全网搜索、网页抓取、结构化提取工具。<br><br><b>功能：</b><br>• 搜索：全网搜索信息<br>• 抓取：获取网页内容（Markdown格式）<br>• 提取：结构化提取特定数据<br>• 爬虫：深度爬取整个网站<br><br><b>额度：</b>免费500次/月，做研究非常好用。'},
+  ide:{icon:'💻',title:'IDE — 编辑器集成',desc:'VS Code诊断 + Jupyter代码执行，内置功能无需安装。<br><br><b>功能：</b><br>• 查看VS Code诊断信息（错误、警告）<br>• 在Jupyter环境中执行Python代码<br>• 无需额外配置，开箱即用。'},
+  opencli:{icon:'💻',title:'opencli — 多平台搜索工具',desc:'命令行搜索工具，支持多平台。<br><br><b>用法：</b><br><code>opencli xiaohongshu search "关键词"</code><br><code>opencli bilibili search "关键词"</code><br><code>opencli zhihu search "关键词"</code><br><code>opencli weibo search "关键词"</code><br><code>opencli douyin search "关键词"</code><br><br><b>注意：</b>需Edge浏览器开着并连接OpenCLI扩展。<br>先查状态：<code>opencli doctor</code>'},
+  'bilisum-cli':{icon:'📹',title:'bilisum — 视频AI总结',desc:'B站/YouTube视频的AI转写+总结工具。<br><br><b>启动：</b><br><code>npx bilisum start --data "D:/cursor_workspace/bilisum-data"</code><br><br>启动后访问 <code>http://127.0.0.1:3838</code> 使用Web界面。<br><br><b>数据存储：</b><br>• 数据库：<code>bilisum-data/video_sum.db</code><br>• 缓存：<code>bilisum-data/cache</code><br>• 任务：<code>bilisum-data/tasks</code>'},
+  'video-edit':{icon:'🎬',title:'video-edit — AI视频编辑',desc:'通过RunComfy编辑已有视频（换背景、换装、动作迁移等）。<br><br><b>安装：</b><br><code>npm i -g @runcomfy/cli</code><br><code>runcomfy login</code><br><br><b>用法示例（换背景）：</b><br><code>runcomfy run wan-ai/wan-2-7/edit-video --input \'{"prompt":"Preserve face; change background to modern office","video":"https://...","audio_setting":"origin"}\' --output-dir ./out</code><br><br><b>模型：</b>Wan 2.7（换背景）、Kling 2.6（动作迁移）、Lucy（换装）'},
+  'ai-video-generation':{icon:'🎥',title:'ai-video-generation — AI视频生成',desc:'通过RunComfy文生视频/图生视频。<br><br><b>安装：</b><br><code>npm i -g @runcomfy/cli</code><br><code>runcomfy login</code><br><br><b>用法示例：</b><br><code>runcomfy run happyhorse/happyhorse-1-0/text-to-video --input \'{"prompt":"A red kite at golden hour","duration":8}\' --output-dir ./out</code><br><br><b>支持模型：</b>HappyHorse 1.0、Wan 2-7、Kling 3.0、Veo 3-1、Seedance v2、Hailuo 2-3、Dreamina 3-0。<br><br>需付费RunComfy账户。'},
+  'ai-avatar-video':{icon:'👤',title:'ai-avatar-video — AI虚拟人视频',desc:'通过RunComfy创建AI虚拟人/口型同步视频。<br><br><b>安装：</b><br><code>npm i -g @runcomfy/cli</code><br><code>runcomfy login</code><br><br><b>用法示例（默认路径-人像+音频）：</b><br><code>runcomfy run bytedance/omnihuman/api --input \'{"image_url":"https://...","audio_url":"https://..."}\' --output-dir ./out</code><br><br><b>支持：</b>OmniHuman（默认）、Wan 2-7、HappyHorse 1.0、Seedance v2。<br><br>需一张人像照片+一段音频。'},
+  'ai-image-generation':{icon:'🖼️',title:'ai-image-generation — AI图像生成',desc:'通过RunComfy文生图/图生图。<br><br><b>安装：</b><br><code>npm i -g @runcomfy/cli</code><br><code>runcomfy login</code><br><br><b>用法示例：</b><br><code>runcomfy run blackforestlabs/flux-2-klein/9b/text-to-image --input \'{"prompt":"A purple cat on a stone","steps":25}\' --output-dir ./out</code><br><br><b>支持模型：</b>FLUX 2 Klein、GPT Image 2、Nano Banana 2、Seedream 5、Qwen Image、Wan 2-7等。<br><br>需付费RunComfy账户。'},
+  'desktop-control':{icon:'🖥️',title:'desktop-control — 桌面自动化',desc:'操控鼠标键盘、截图、打开应用，让AI操作你的电脑。<br><br><b>用法：</b><br>移动鼠标：<code>uvx desktop-agent mouse move x y</code><br>点击：<code>uvx desktop-agent mouse click x y</code><br>打字：<code>uvx desktop-agent keyboard write "文本"</code><br>截图：<code>uvx desktop-agent screen screenshot 文件名</code><br>打开应用：<code>uvx desktop-agent app open notepad</code><br>快捷键：<code>uvx desktop-agent keyboard hotkey "ctrl,c"</code><br><br><b>注意：</b>鼠标移到屏幕角落会触发安全暂停。'},
+	  'github-mcp':{icon:'🐙',title:'GitHub MCP — 仓库管理',desc:'GitHub官方MCP工具，管理仓库、Issue、PR。<br><br><b>功能：</b><br>• 创建/管理仓库<br>• 查看/创建Issue<br>• 审查/合并PR<br>• 管理分支<br><br><b>注意：</b>需配置 GITHUB_TOKEN 环境变量。'},
+	  'playwright-mcp':{icon:'🎭',title:'Playwright — 浏览器自动化',desc:'微软浏览器自动化MCP工具。<br><br><b>功能：</b><br>• 打开网页<br>• 点击按钮、填写表单<br>• 截图验证<br>• 自动化测试<br><br>无需额外配置，已集成在MCP中。'},
+	  'weather-mcp':{icon:'🌤️',title:'彩云天气 — 天气预报',desc:'中国天气预报MCP工具。<br><br><b>功能：</b><br>• 查看实时天气<br>• 降水预报<br>• 天气预警通知<br><br><b>用法：</b>直接问「今天天气怎么样」「会下雨吗」即可。'},
+	  'hotnews-mcp':{icon:'📰',title:'hotnews — 实时热点',desc:'Wopal实时热点新闻获取MCP工具。<br><br><b>功能：</b><br>• 获取最新热点新闻<br>• 按分类查看<br>• 实时更新<br><br><b>用法：</b>直接说「看看今天的热点」「有什么新闻」。'},
+	  'files-mcp':{icon:'📁',title:'files — 文件系统',desc:'MCP官方文件系统工具。<br><br><b>功能：</b><br>• 读写桌面文件<br>• 文件搜索<br>• 目录管理<br><br>无需额外配置，开箱即用。'},
+	  'knowledge-mcp':{icon:'🧠',title:'Knowledge Graph — 知识图谱',desc:'AI知识图谱记忆MCP工具。<br><br><b>功能：</b><br>• 存储和检索知识<br>• 实体关系管理<br>• 语义搜索<br><br>让AI拥有长期记忆。'},
+	  'thinking-mcp':{icon:'💭',title:'Sequential Thinking — 链式思考',desc:'结构化推理MCP工具。<br><br><b>功能：</b><br>• 分步骤推理复杂问题<br>• 链式思考过程<br>• 结构化分析<br><br>适合需要深度思考的复杂问题。'},
+	  'docfork-mcp':{icon:'📚',title:'Docfork — 文档搜索',desc:'文档搜索与抓取MCP工具。<br><br><b>功能：</b><br>• 搜索技术文档<br>• 抓取文档内容<br>• 文档结构化提取<br><br><b>注意：</b>需浏览器OAuth授权。'},
+	  'edge-tts-cli':{icon:'🔊',title:'edge-tts — 命令行语音合成',desc:'微软Edge神经语音合成命令行工具。<br><br><b>用法：</b><br><code>uvx edge-tts --text "你好" --voice zh-CN-XiaoxiaoNeural --write-media out.mp3</code><br><br><b>特点：</b><br>• 免安装，靠uv自动拉取<br>• 60+种语音（中文、英文、日文等）<br>• 支持变速、变调、调节音量<br><br>Nova后台服务已自动集成此工具。'},
+	  'edge-tts':{icon:'🔊',title:'edge-tts — 语音合成',desc:'微软Edge神经语音合成+Nova自动语音播报系统。<br><br><b>直接调用：</b><br><code>uvx edge-tts --text "你好" --voice zh-CN-XiaoxiaoNeural --write-media out.mp3</code><br><br><b>Nova自动播报：</b><br>每次回复完自动调用火山引擎TTS播报重点，播完自动删。<br>主用：<code>python tts_send.py "内容"</code><br>回退：<code>python tts_speak.py "内容"</code><br><br><b>支持：</b>60+种语音、变速/变调/调音量。'},
+
+	'self-improving-agent':{icon:'🧠',title:'self-improving-agent — 自我进化',desc:'记录错误和纠正，让AI越长越聪明。<br><br><b>工作原理：</b><br>• 每次犯错时记录错误原因和正确做法<br>• 下次遇到类似情况避免再犯<br>• 持续积累经验，越用越好用。<br><br><b>适用：</b>当Nova做错了什么，告诉它正确的做法即可。'},
+  'proactive-agent':{icon:'⏰',title:'proactive-agent — 主动执行',desc:'AI主动执行定时任务和自动流程。<br><br><b>功能：</b><br>• 设置定时任务（如每天早上9点检查天气）<br>• 自动执行重复性工作<br>• 到点自动干活，不用你提醒。<br><br><b>用法：</b>告诉Nova想在什么时间做什么事。'},
+  'skill-vetter':{icon:'🛡️',title:'skill-vetter — 安全检查',desc:'安装新Skill前做安全检查，防止恶意技能入侵环境。<br><br><b>检查项目：</b><br>• 代码权限是否合理<br>• 是否有危险操作<br>• 来源是否可信<br><br><b>适用：</b>从skills.sh等第三方来源安装新技能时自动调用。'},
+  'auto-updater':{icon:'🔄',title:'auto-updater — 自动更新',desc:'自动更新所有已安装的Skills，保持技能到最新版本。<br><br><b>功能：</b><br>• 检查每个已安装技能是否有更新<br>• 自动下载最新版本<br>• 保持所有技能处于最新状态。<br><br><b>适用：</b>定期运行，确保技能不过期。'},
+  'summarize':{icon:'📋',title:'summarize — 内容总结',desc:'总结网页、PDF、图片、音频、视频，快速提取核心内容。<br><br><b>适用场景：</b><br>• 长文章/PDF → 提取要点<br>• 视频内容 → 文字总结<br>• 音频录音 → 转文字+总结<br>• 研究报告 → 浓缩核心结论。<br><br><b>用法：</b>直接发链接或文件路径给Nova。'},
+	  'file-organizer':{icon:'📂',title:'file-organizer — 智能文件整理',desc:'智能分析文件夹结构、找重复文件、出整理方案。<br><br><b>功能：</b><br>• 分析目录结构和文件类型分布<br>• 按文件名/MD5哈希找重复文件<br>• 提出合理分类方案（按类型/用途/日期）<br>• 确认后自动移动整理<br>• 归档旧文件、清理无用文件。<br><br><b>用法：</b>直接说「整理Downloads文件夹」「找重复文件」「清理半年没动过的文件」。<br><br><b>⚠️ 安全：</b>删除文件前一定会先让你确认。'}
+};
+function showDetail(key){
+  const d=details[key];if(!d)return;
+  document.getElementById('modalContent').innerHTML='<div class="modal-icon">'+d.icon+'</div><div class="modal-title">'+d.title+'</div><div class="modal-desc"><p>'+d.desc+'</p></div>';
+  document.getElementById('modal').classList.add('active');
+}
+document.getElementById('modalClose').onclick=()=>document.getElementById('modal').classList.remove('active');
+document.getElementById('modal').onclick=(e)=>{if(e.target===e.currentTarget)document.getElementById('modal').classList.remove('active')};
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape')document.getElementById('modal').classList.remove('active')});
+// 卡片入场方向
+const dirs=['reveal-left','reveal-right','reveal-up','reveal-scale'];
+document.querySelectorAll('.grid .card.reveal').forEach((el,i)=>{
+  el.classList.add(dirs[i%dirs.length]);
+  el.style.transitionDelay=((i%8)*0.06)+'s';
+});
+const obs=new IntersectionObserver((entries)=>entries.forEach(e=>{
+  if(e.isIntersecting){
+    e.target.classList.add('visible');
+  }
+}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+// 浮动粒子
+(function(){
+  const c=['#d4647a','#e0889a','#8ab0d0','#7ac0a8'];
+  for(let i=0;i<12;i++){
+    const p=document.createElement('div');p.className='particle';
+    const s=Math.random()*6+3;
+    p.style.cssText='width:'+s+'px;height:'+s+'px;left:'+(Math.random()*100)+'vw;top:'+(Math.random()*100)+'vh;background:'+c[i%4]+';animation:float'+((i%3)+1)+' '+(6+Math.random()*8)+'s ease-in-out infinite;animation-delay:'+(Math.random()*5)+'s';
+    document.body.appendChild(p);
+  }
+})();
+</script>
+</body>
+</html>

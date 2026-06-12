@@ -1,0 +1,50 @@
+# 下载和临时文件
+downloads/
+*.zip
+*.rar
+*.7z
+*.exe
+*.msi
+
+# 缓存
+*.log
+*.tmp
+Cache/
+cache/
+
+# 系统
+$RECYCLE.BIN/
+DumpStack.log.tmp
+pagefile.sys
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+
+# Node
+node_modules/
+dist/
+
+# VS Code
+.vscode/
+
+# 大文件
+*.mp4
+*.mp3
+*.wav
+*.avi
+*.mkv
+*.mov
+*.wmv
+*.iso
+*.dmg
+
+# OCR 缓存
+*ocr_results*.json
+*ocr_desktop*.json
+*ocr_clone*.json
+
+# Omnara
+.omnara/
